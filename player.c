@@ -69,14 +69,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // later but the 6502 doesn't have any one-cycle instruction to place between
 // the two STA instructions.
 //
-// Generator 34 has a similiar issue:
+// Generator 34 has a similar issue:
 //
 // Generator 35 ends with
 //   ...
 //   STA $C030  ; duty cycle end
 //   JMP NEXT   ; chain next generator
 //
-// Generator 34 needs to place the duty cylce end exactly one clock cycle
+// Generator 34 needs to place the duty cycle end exactly one clock cycle
 // earlier but the 6502 doesn't have any one-cycle instruction to place between
 // the STA and the JMP instructions.
 //
@@ -140,7 +140,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //
 // Performing 3 independent tasks as fast as possible asks for more CPU
-// regsiters than the 6502 provides. Therefore the CPU stack is repurposed as
+// registers than the 6502 provides. Therefore the CPU stack is repurposed as
 // sample buffer. This allows the S register to serve as an additional index
 // register.
 // The sample buffer is a ring buffer so the S register can be either used to
