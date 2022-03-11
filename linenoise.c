@@ -157,7 +157,7 @@ static int completeLine(register struct linenoiseState *ls) {
                     i = (i+1) % (lc.len+1);
                     if (i == lc.len) linenoiseBeep();
                     break;
-                case CH_ESC: /* escape */
+                case CTRL_C:
                     /* Re-show original buffer */
                     if (i < lc.len) refreshLine(ls);
                     stop = 1;
@@ -396,7 +396,6 @@ static int linenoiseEdit(const char *prompt)
             history_len--;
             free(history[history_len]);
             return (int)l.len;
-        case CTRL_C:
         case CH_ESC:
             errno = EAGAIN;
             return -1;
