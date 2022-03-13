@@ -327,10 +327,16 @@ void main(int argc, char *argv[])
 
     {
       bool ok;
-      char* buffer = malloc(0x1000);
+      char* buffer = malloc(0x800);
+
+      if (!buffer)
+      {
+        printf("Connecting - Out of memory\n");
+        exit(EXIT_FAILURE);
+      }
 
       #ifdef HAVE_ETH
-      ok = w5100_http_open(url_ip, url_port, url_selector, buffer, 0x1000);
+      ok = w5100_http_open(url_ip, url_port, url_selector, buffer, 0x800);
       #else
       ok = true;
       #endif
