@@ -29,7 +29,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define _CRT_NONSTDC_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
+#ifdef _WIN32
 #include <io.h>
+#else
+#include <unistd.h>
+#define O_BINARY 0
+#endif
 #include <math.h>
 #include <fcntl.h>
 #include <stdio.h>
