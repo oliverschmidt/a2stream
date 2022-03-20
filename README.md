@@ -1,9 +1,9 @@
 # A2Stream
-A2Stream simultaneously receives an **.a2stream** file from any HTTP server and plays it through the stock Apple II speaker using pulse-width modulation at 22050Hz sample rate with ~5.17 bit resolution.
+A2Stream simultaneously receives an **.a2stream** file from any HTTP server and plays it through the stock Apple II speaker circuit using pulse-width modulation at 22050Hz sample rate with ~5.17 bit resolution.
 
 Hardware requirements:
 * Enhanced //e (with extended 80 column card) or IIgs
-* [Uthernet II](http://a2retrosystems.com/products.htm) in any slot
+* [Uthernet II](http://a2retrosystems.com/products.htm) Ethernet card in any slot
 
 To stream an **.a2stream** file:
 * Run **A2STREAM.SYSTEM** and enter the URL of an **.a2stream** file
