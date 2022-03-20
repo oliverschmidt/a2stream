@@ -5,6 +5,9 @@ Hardware requirements:
 * Enhanced //e (with extended 80 column card) or IIgs
 * [Uthernet II](http://a2retrosystems.com/products.htm) Ethernet card in any slot
 
+To view a demo video:
+* Visit https://youtu.be/YcYEnYsI-_M
+
 To stream an **.a2stream** file:
 * Run **A2STREAM.SYSTEM** and enter the URL of an **.a2stream** file
 * Use these shortcuts to make use of persistent history and auto-complete:
