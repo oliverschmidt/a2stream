@@ -30,6 +30,8 @@ To stream an **.a2stream** file:
   * `http://pascalschmidt.de/data/HowsItSupposedToFeel.a2stream`
   * `http://pascalschmidt.de/data/TimeToSayGoodbye.a2stream` - shows progress bar
   * `http://pascalschmidt.de/data/HealYou.a2stream` - shows default cover art
+* Use any key to pause streaming
+* Use Esc to quit at any point
 
 To config the Ethernet slot:
 * Put the Uthernet II in slot 3 <ins>or</ins>
