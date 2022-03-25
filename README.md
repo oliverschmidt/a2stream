@@ -27,6 +27,7 @@ To stream an **.a2stream** file:
   * `http://pascalschmidt.de/data/Levels.a2stream`
   * `http://pascalschmidt.de/data/Sandstorm.a2stream`
   * `http://pascalschmidt.de/data/1984.a2stream`
+  * `http://pascalschmidt.de/data/HighwayToHell.a2stream`
   * `http://pascalschmidt.de/data/HowsItSupposedToFeel.a2stream`
   * `http://pascalschmidt.de/data/TimeToSayGoodbye.a2stream` - shows progress bar
   * `http://pascalschmidt.de/data/HealYou.a2stream` - shows default cover art
