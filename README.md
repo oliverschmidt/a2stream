@@ -1,9 +1,12 @@
 # A2Stream
-A2Stream simultaneously receives an **.a2stream** file from any HTTP server and plays it through the stock Apple II speaker using pulse-width modulation at 22050Hz sample rate with ~5.17 bit resolution.
+A2Stream simultaneously receives an **.a2stream** file from any HTTP server and plays it through the stock Apple II speaker circuit using pulse-width modulation at 22050Hz sample rate with ~5.17 bit resolution.
 
 Hardware requirements:
 * Enhanced //e (with extended 80 column card) or IIgs
-* [Uthernet II](http://a2retrosystems.com/products.htm) in any slot
+* [Uthernet II](http://a2retrosystems.com/products.htm) Ethernet card in any slot
+
+To view a demo video:
+* Visit https://youtu.be/YcYEnYsI-_M
 
 To stream an **.a2stream** file:
 * Run **A2STREAM.SYSTEM** and enter the URL of an **.a2stream** file
@@ -24,9 +27,12 @@ To stream an **.a2stream** file:
   * `http://pascalschmidt.de/data/Levels.a2stream`
   * `http://pascalschmidt.de/data/Sandstorm.a2stream`
   * `http://pascalschmidt.de/data/1984.a2stream`
+  * `http://pascalschmidt.de/data/HighwayToHell.a2stream`
   * `http://pascalschmidt.de/data/HowsItSupposedToFeel.a2stream`
   * `http://pascalschmidt.de/data/TimeToSayGoodbye.a2stream` - shows progress bar
   * `http://pascalschmidt.de/data/HealYou.a2stream` - shows default cover art
+* Use any key to pause streaming
+* Use Esc to quit at any point
 
 To config the Ethernet slot:
 * Put the Uthernet II in slot 3 <ins>or</ins>
@@ -42,7 +48,7 @@ To get decent sound quality on the IIgs:
 To prepare an **.a2stream** file for streaming:
 * Create a header-less **.raw** file with 22050Hz mono 32-bit-float PCM data (e.g. with [Audacity](https://www.audacityteam.org/))
 * Generate an **.a2stream** file from the ***.raw*** file with **gena2stream.exe**
-  * Put a standard 16kB **.dhgr** file beside the **.raw** file for custom cover art
+  * Put a standard 16kB **.dhgr** file beside the **.raw** file for custom cover art (optional)
   * Use the option to `-p` switch the visualization from *level meter* to *progress bar*
 * Put the **.a2stream** file onto any HTTP (not HTTPS) server
   * Run a simple local HTTP server on Windows
