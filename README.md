@@ -24,13 +24,13 @@ To stream an **.a2stream** file:
   | Tab    | Move to next auto-complete     |
   | Ctrl+C | Quit from auto-complete        |
 * Find sample **.a2stream** files at these (case-sensitive) URLs:
-  * `http://pascalschmidt.de/data/Levels.a2stream`
-  * `http://pascalschmidt.de/data/Sandstorm.a2stream`
-  * `http://pascalschmidt.de/data/1984.a2stream`
-  * `http://pascalschmidt.de/data/HighwayToHell.a2stream`
-  * `http://pascalschmidt.de/data/HowsItSupposedToFeel.a2stream`
-  * `http://pascalschmidt.de/data/TimeToSayGoodbye.a2stream` - shows progress bar
-  * `http://pascalschmidt.de/data/HealYou.a2stream` - shows default cover art
+  * `http://a2retro.de/a2s/Levels.a2stream`
+  * `http://a2retro.de/a2s/Sandstorm.a2stream`
+  * `http://a2retro.de/a2s/1984.a2stream`
+  * `http://a2retro.de/a2s/HighwayToHell.a2stream`
+  * `http://a2retro.de/a2s/HowsItSupposedToFeel.a2stream`
+  * `http://a2retro.de/a2s/TimeToSayGoodbye.a2stream` - shows progress bar
+  * `http://a2retro.de/a2s/HealYou.a2stream` - shows default cover art
 * Use any key to pause streaming
 * Use Esc to quit at any point
 
