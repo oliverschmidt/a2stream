@@ -52,6 +52,6 @@ To prepare an **.a2stream** file for streaming:
   * Use the option to `-p` switch the visualization from *level meter* to *progress bar*
 * Put the **.a2stream** file onto any HTTP (not HTTPS) server
   * Run a simple local HTTP server on Windows
-    * Run the [HTTP File Server](http://www.rejetto.com/hfs/) and drop the file you want to stream in its _Virtual File System_.
+    * Run the [HTTP File Server](http://www.rejetto.com/hfs/) and drop the file you want to stream in its _Virtual File System_
   * Run a simple local HTTP server on Linux
-    * `cd` to the directory containing the file you want to stream and enter `python -m SimpleHTTPServer` or `python3 -m http.server` depending on the Python version you want to use.
+    * `cd` to the directory containing the file you want to stream and enter `python -m SimpleHTTPServer` or `python3 -m http.server` depending on the Python version you want to use
