@@ -3,7 +3,7 @@ A2Stream simultaneously receives an **.a2stream** file from any HTTP server and 
 
 Hardware requirements:
 * Enhanced //e (with extended 80 column card) or IIgs
-* [Uthernet II](http://a2retrosystems.com/products.htm) Ethernet card in any slot
+* [Uthernet II](https://a2retrosystems.com/products.htm) Ethernet card in any slot
 
 To view a demo video:
 * Visit https://youtu.be/YcYEnYsI-_M
