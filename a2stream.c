@@ -179,6 +179,7 @@ void main(int argc, char *argv[])
   bool do_again = false;
   bool tape_out = false;
   char *url = NULL;
+  bool Offload_DNS;
 
   _filetype = PRODOS_T_TXT;
   _heapadd((void *)0x0800, 0x1800);
@@ -245,13 +246,18 @@ void main(int argc, char *argv[])
   }
   #endif
 
-  printf("- Ok\n\nObtaining IP address ");
-  #ifdef HAVE_ETH
-  if (dhcp_init())
+  Offload_DNS = w5100_init(eth_init);
+
+  if (!Offload_DNS)
   {
-    error_exit();
+    printf("- Ok\n\nObtaining IP address ");
+    #ifdef HAVE_ETH
+    if (dhcp_init())
+    {
+      error_exit();
+    }
+    #endif
   }
-  #endif
   printf("- Ok\n\n");
 
   linenoiseHistoryLoad("stream.urls");
@@ -292,7 +298,7 @@ void main(int argc, char *argv[])
 
       printf("\n\nProcessing URL ");
       #ifdef HAVE_ETH
-      if (!url_parse(url))
+      if (!url_parse(url, !Offload_DNS))
       #endif
       {
         break;
@@ -323,7 +329,7 @@ void main(int argc, char *argv[])
     }
 
     // Copy IP config from IP65 to W5100
-    w5100_config(eth_init);
+    w5100_config();
 
     {
       bool ok;
@@ -336,7 +342,16 @@ void main(int argc, char *argv[])
       }
 
       #ifdef HAVE_ETH
-      ok = w5100_http_open(url_ip, url_port, url_selector, buffer, 0x800);
+      if (Offload_DNS)
+      {
+        ok = w5100_http_open_name(url_host, strlen(url_host) - 4, url_port,
+                                  url_selector, buffer, 0x800);
+      }
+      else
+      {
+        ok = w5100_http_open_addr(url_ip, url_port,
+                                  url_selector, buffer, 0x800);
+      }
       #else
       ok = true;
       #endif

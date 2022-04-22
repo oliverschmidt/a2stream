@@ -8,7 +8,9 @@ IP65 ?= ip65
 AC ?= ac.jar
 
 all:
-	$(CL65) -t apple2enh --start-addr 0x4000 -Wl -D,__HIMEM__=0xBF00 -I $(IP65) -Oir -Cl -D NDEBUG -D HAVE_ETH -D SINGLE_SOCKET -m a2stream.map a2stream.c linenoise.c player.c w5100_http.c w5100.c $(IP65)/ip65.lib $(IP65)/ip65_apple2_uther2.lib
+	$(CL65) -t apple2enh --start-addr 0x4000 -Wl -D,__STACKSIZE__=0x0400 -Wl -D,__HIMEM__=0xBF00 \
+	-D NDEBUG -D HAVE_ETH -D SINGLE_SOCKET -I $(IP65) -Oir -Cl -m a2stream.map \
+	a2stream.c linenoise.c player.c w5100_http.c w5100.c $(IP65)/ip65.lib $(IP65)/ip65_apple2_uther2.lib
 
 dsk: all
 	copy prodos.dsk A2Stream.dsk
