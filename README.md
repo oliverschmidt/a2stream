@@ -5,8 +5,9 @@ Hardware requirements:
 * Enhanced //e (with extended 80 column card) or IIgs
 * [Uthernet II](https://a2retrosystems.com/products.htm) Ethernet card in any slot
 
-To view a demo video:
+To view demo videos:
 * Visit https://youtu.be/YcYEnYsI-_M
+* Visit https://youtu.be/7kxo0l3t1LM
 
 To stream an **.a2stream** file:
 * Run **A2STREAM.SYSTEM** and enter the URL of an **.a2stream** file
@@ -31,8 +32,9 @@ To stream an **.a2stream** file:
   * `http://a2retro.de/a2s/HowsItSupposedToFeel.a2stream`
   * `http://a2retro.de/a2s/TimeToSayGoodbye.a2stream` - shows progress bar
   * `http://a2retro.de/a2s/HealYou.a2stream` - shows default cover art
-* Use any key to pause streaming
-* Use Esc to quit at any point
+* Use `Esc` to quit at any point
+* Use `1`-`9` to fast-forward 1-9 minutes
+* Use any other key to pause streaming
 
 To config the Ethernet slot:
 * Put the Uthernet II in slot 3 <ins>or</ins>
