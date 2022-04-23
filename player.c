@@ -792,11 +792,14 @@ void gen_player(uint8_t e_ini, bool t_out)
   #endif
 }
 
-enum state {playing, pausing, waiting};
+enum state {waiting, loading, pausing, playing};
+
+char display[][] = {"Wait", "Load", "Paus"};
 
 void play(void)
 {
   uint8_t cya;
+  uint16_t skip;
   enum state state = playing;
 
   {
@@ -841,30 +844,61 @@ void play(void)
   {
     if (kbhit())
     {
-      if (cgetc() == CH_ESC)
+      char c = cgetc();
+      if (c == CH_ESC)
       {
         w5100_disconnect();
         return;
       }
-      if (state == pausing)
+      if (c >= '1' && c <= '9')
       {
-        state = playing;
+        if (state != loading)
+        {
+          state = loading;
+          skip = 87 * 60 * (c - '0');
+        }
       }
       else
       {
-        state = pausing;
+        if (state == pausing)
+        {
+          state = playing;
+        }
+        else
+        {
+          state = pausing;
+        }
       }
     }
     #ifdef HAVE_ETH
     if (state != pausing)
     {
-      if (w5100_receive_request() >= 0x0100)
+      uint8_t recv = w5100_receive_request() >> 8;
+      if (state == loading)
       {
-        state = playing;
+        if (recv)
+        {
+          w5100_receive_commit(recv << 8);
+          if (skip > recv)
+          {
+            skip -= recv;
+          }
+          else
+          {
+            state = waiting;
+          }
+        }
       }
       else
       {
-        state = waiting;
+        if (recv)
+        {
+          state = playing;
+        }
+        else
+        {
+          state = waiting;
+        }
       }
     }
     #endif
@@ -876,8 +910,7 @@ void play(void)
     else
     {
       mix_on();
-      cputsxy(35, 22, state == pausing ? "Paus"
-                                       : "Wait");
+      cputsxy(35, 22, display[state]);
     }
   }
 
