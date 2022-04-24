@@ -37,6 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <string.h>
 #include <stdint.h>
@@ -245,7 +246,7 @@ void write_progress_bar(int a2str)
   #undef MAX
 }
 
-void main(int argc, const char *argv[])
+int main(int argc, const char *argv[])
 {
   if (argc < 2 || argc == 3 && argv[1][0] != '-' || argc > 3)
   {
@@ -255,7 +256,7 @@ void main(int argc, const char *argv[])
             "              -p: show progress bar\n"
             "       audio: headerless 32-bit float 22050Hz mono samples\n",
             argv[0]);
-    return;
+    return EXIT_FAILURE;
   }
 
   enum visual visual = level_meter;
@@ -271,7 +272,7 @@ void main(int argc, const char *argv[])
   if (audio == -1)
   {
     perror("audio");
-    return;
+    return EXIT_FAILURE;
   }
 
   char *dot = strrchr(argv[argc - 1], '.');
@@ -292,7 +293,7 @@ void main(int argc, const char *argv[])
   if (a2str == -1)
   {
     perror("a2str");
-    return;
+    return EXIT_FAILURE;
   }
 
   if (cover == -1)
@@ -304,14 +305,14 @@ void main(int argc, const char *argv[])
     if (read(cover, dhgr, sizeof(dhgr)) != sizeof(dhgr))
     {
       perror("cover");
-      return;
+      return EXIT_FAILURE;
     }
   }
 
   if (write(a2str, dhgr, sizeof(dhgr)) != sizeof(dhgr))
   {
     perror("a2str");
-    return;
+    return EXIT_FAILURE;
   }
 
   if (visual == level_meter)
@@ -351,7 +352,7 @@ void main(int argc, const char *argv[])
     if (sample == -1)
     {
       perror("audio");
-      return;
+      return EXIT_FAILURE;
     }
 
     if (sample == 0)
@@ -390,7 +391,7 @@ void main(int argc, const char *argv[])
   if (lseek(audio, 0, SEEK_SET) == -1)
   {
     perror("audio");
-    return;
+    return EXIT_FAILURE;
   }
 
   // Only amplify, never quiten - even if that means clipping!
@@ -418,7 +419,7 @@ void main(int argc, const char *argv[])
     if (sample == -1)
     {
       perror("audio");
-      return;
+      return EXIT_FAILURE;
     }
 
     if (sample == 0)
@@ -512,7 +513,7 @@ void main(int argc, const char *argv[])
     if (write(a2str, y, OUTPUT_CHUNK_SIZE) != OUTPUT_CHUNK_SIZE)
     {
       perror("a2str");
-      return;
+      return EXIT_FAILURE;
     }
     offset += SAMPLE_CHUNK_SIZE;
 
@@ -529,6 +530,7 @@ void main(int argc, const char *argv[])
   }
 
   close(a2str);
+  return EXIT_SUCCESS;
 }
 
 // cover.dhgr
