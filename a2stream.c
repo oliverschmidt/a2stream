@@ -114,7 +114,6 @@ bool load(register uint8_t *ptr, uint16_t len, bool aux)
   register uint16_t i = len;
   register volatile uint8_t *data = w5100_data;
 
-  #ifdef HAVE_ETH
   while (w5100_receive_request() < len)
   {
     if (!w5100_connected() || input_check_for_abort_key())
@@ -122,7 +121,6 @@ bool load(register uint8_t *ptr, uint16_t len, bool aux)
       return false;
     }
   }
-  #endif
 
   if (aux)
   {
@@ -239,24 +237,20 @@ void main(int argc, char *argv[])
   }
 
   printf("- %u\n\nInitializing %s ", eth_init, eth_name);
-  #ifdef HAVE_ETH
   if (ip65_init(eth_init))
   {
     error_exit();
   }
-  #endif
 
   Offload_DNS = w5100_init(eth_init);
 
   if (!Offload_DNS)
   {
     printf("- Ok\n\nObtaining IP address ");
-    #ifdef HAVE_ETH
     if (dhcp_init())
     {
       error_exit();
     }
-    #endif
   }
   printf("- Ok\n\n");
 
@@ -270,9 +264,7 @@ void main(int argc, char *argv[])
     {
       // Reinit IP65 for DNS lookup,
       // IP configuration still valid
-      #ifdef HAVE_ETH
       ip65_init(eth_init);
-      #endif
     }
 
     // Repeat parsing a URL
@@ -297,9 +289,7 @@ void main(int argc, char *argv[])
       linenoiseHistoryAdd(url);
 
       printf("\n\nProcessing URL ");
-      #ifdef HAVE_ETH
       if (!url_parse(url, !Offload_DNS))
-      #endif
       {
         break;
       }
@@ -341,7 +331,6 @@ void main(int argc, char *argv[])
         exit(EXIT_FAILURE);
       }
 
-      #ifdef HAVE_ETH
       if (Offload_DNS)
       {
         ok = w5100_http_open_name(url_host, strlen(url_host) - 4, url_port,
@@ -352,9 +341,6 @@ void main(int argc, char *argv[])
         ok = w5100_http_open_addr(url_ip, url_port,
                                   url_selector, buffer, 0x800);
       }
-      #else
-      ok = true;
-      #endif
 
       free(buffer);
       if (!ok)

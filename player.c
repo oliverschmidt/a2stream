@@ -180,11 +180,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define VISU_L2H 13       // point to switch from lo to hi
 #define VISU_NUM 39       // number of visualization bytes
 
-#ifndef HAVE_ETH
-#define MOCK_BUF 0xDF00   // mock ring buffer
-#define NOT_USED 0x0300   // not used address
-#endif
-
 #define LEAVE 0xD400
 
 #define HIRES_186 0x2BD0  // hires scanline 186
@@ -274,9 +269,7 @@ static struct ins prolog_1[] = {
 
 static struct ins prolog_2[] = {
   LDA_E(DATA),      // high byte
-  #ifdef HAVE_ETH
   BNE_JMP(LEAVE),   // at least one page available
-  #endif
   LDY_IM(0x28),     // read pointer register
   STY_E(LOW),
   LDA_E(DATA),      // high byte
@@ -295,29 +288,17 @@ static struct ins prolog_3[] = {
 
 static struct ins transf_1[] = {
   INY,
-  #ifdef HAVE_ETH
   LDA_E(DATA),
-  #else
-  LDA_AY(MOCK_BUF),
-  #endif
   STA_AY(RING_BUF),
   INY,
   BRK
 };
 
 static struct ins transf_2[] = {
-  #ifdef HAVE_ETH
   LDA_E(DATA),
-  #else
-  LDA_AY(MOCK_BUF),
-  #endif
   STA_AY(RING_BUF),
   INY,
-  #ifdef HAVE_ETH
   LDA_E(DATA),
-  #else
-  LDA_AY(MOCK_BUF),
-  #endif
   STA_AY(RING_BUF),
   BRK
 };
@@ -781,15 +762,6 @@ void gen_player(uint8_t e_ini, bool t_out)
       cputc('.');
     }
   }
-
-  #ifndef HAVE_ETH
-  *(uint8_t *)NOT_USED = *(uint8_t *)0xC081;
-  *(uint8_t *)NOT_USED = *(uint8_t *)0xC081;
-  memset((uint8_t *)MOCK_BUF,        HI(SILENCE),           0x0100);
-  memset((uint8_t *)MOCK_BUF + 0xAB, HI(SILENCE) + DTY_MAX, 0x0050);
-  *(uint8_t *)(MOCK_BUF + 0xAF) = HI(VISU_BUF);
-  *(uint8_t *)NOT_USED = *(uint8_t *)0xC080;
-  #endif
 }
 
 enum state {waiting, loading, pausing, playing};
@@ -824,23 +796,13 @@ void play(void)
     }
   }
 
-  #ifndef HAVE_ETH
-  write_aux();
-  *(uint8_t *)VISU_BUF = 0;
-  write_main();
-  #endif
-
   if (get_ostype() & APPLE_IIGS)
   {
     cya = *(uint8_t *)0xC036;
     *(uint8_t *)0xC036 &= 0b01111111; // set normal speed
   }
 
-  #ifdef HAVE_ETH
   while (w5100_connected())
-  #else
-  while (true)
-  #endif
   {
     if (kbhit())
     {
@@ -870,7 +832,6 @@ void play(void)
         }
       }
     }
-    #ifdef HAVE_ETH
     if (state != pausing)
     {
       uint8_t recv = w5100_receive_request() >> 8;
@@ -901,7 +862,6 @@ void play(void)
         }
       }
     }
-    #endif
     if (state == playing)
     {
       mix_off();
