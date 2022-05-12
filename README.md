@@ -50,7 +50,7 @@ To get decent sound quality on the IIgs:
 
 To prepare an **.a2stream** file for streaming:
 * Create a header-less **.raw** file with 22050Hz mono 32-bit-float PCM data (e.g. with [Audacity](https://www.audacityteam.org/))
-* Generate an **.a2stream** file from the **.raw** file with **gena2stream.exe**
+* Generate an **.a2stream** file from the **.raw** file with **gena2stream.exe** ([source code](https://github.com/oliverschmidt/A2Stream/blob/main/gena2stream.c))
   * Put a standard 16kB **.dhgr** file beside the **.raw** file for custom cover art (optional)
   * Use the option to `-p` switch the visualization from *level meter* to *progress bar*
 * Put the **.a2stream** file onto any HTTP (not HTTPS) server
