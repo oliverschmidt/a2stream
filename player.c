@@ -178,7 +178,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define VISU_BUF 0x10D8   // $D8 > GEN_MAX * GEN_NUM !!!
 #define VISU_MAX 140      // lo:$10D8-$1ED8 hi:$40D8-$BED8
 #define VISU_L2H 13       // point to switch from lo to hi
-#define VISU_NUM 39       // number of visualization bytes
+#define VISU_NUM 40       // number of visualization bytes
 
 #define LEAVE 0xD400
 
@@ -335,16 +335,16 @@ static struct ins init_vis[] = {
 
 static struct ins visual_1[] = {
   LDA_IY(VISU_PTR),
-  STA_AY(HIRES_186),
-  STA_AY(HIRES_187),
-  STA_AY(HIRES_188),
+  STA_AY(HIRES_186-1),
+  STA_AY(HIRES_187-1),
+  STA_AY(HIRES_188-1),
   BRK
 };
 
 static struct ins visual_2[] = {
-  STA_AY(HIRES_189),
-  STA_AY(HIRES_190),
-  STA_AY(HIRES_191),
+  STA_AY(HIRES_189-1),
+  STA_AY(HIRES_190-1),
+  STA_AY(HIRES_191-1),
   INY,
   BRK
 };

@@ -64,23 +64,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 1. A 16 kB Apple II DHGR graphics screen. This part is copied 1:1 from the
 //    .DHGR cover art input file.
 //
-// 2. Exactly 140 visualization templates. Each template consists of 39 bytes.
+// 2. Exactly 140 visualization templates. Each template consists of 40 bytes.
 //    - The first byte is 0 or 1. If it is 0, then the template is meant for
 //      MAIN memory. If it is 1, then the template is meant for AUX memory.
-//    - The following 38 bytes represent a line of a 40 byte DHGR graphics
-//      screen with both the leftmost and the rightmost byte missing. That line
-//      is displayed in the bottom 6 lines of the screen.
+//    - The following 39 bytes represent a line of a 40 byte DHGR graphics
+//      screen with the rightmost byte missing. That line is displayed in the
+//      bottom 6 lines of the screen.
 //
 // 3. A variable number of sample data chunks. Each chunk consists of 256 bytes
 //    with 255 audio samples and one visualization byte.
-//    - The visualization byte is placed at offset 175 in the data chunk and
+//    - The visualization byte is placed at offset 173 in the data chunk and
 //      represents a value between 0 and 139 which selects the visualization
 //      template to display. However, those 140 values are all added to a bias.
 //      That bias is 16 for the values from 0 to 13 and 64 for the values from
 //      14 to 139.
 //    - The 255 audio samples represent PWM audio values between 0 and 35.
 //      However, those 36 values are all added to a bias. That bias is 100 for
-//      samples at offset 171 to 249 in the data chunk and 64 for samples at
+//      samples at offset 169 to 250 in the data chunk and 64 for samples at
 //      all other offsets.
 //
 
@@ -92,7 +92,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // bytes in those two sample data chunks reference the two templates of one
 // of the 70 pairs.
 //
-// Especially visualizations like or a level meter a progress bar result in
+// Especially visualizations like a level meter or a progress bar result in
 // duplicate visualization templates because a certain visualization increment
 // only changes AUX or MAIN and leaves the other memory alone. Leveraging that
 // effect by de-duplicating templates would allow for significantly more
@@ -104,19 +104,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Additionally the generator might customize the templates to blend with the
 // background color of the full graphics screen.
 //
-// And in the opposite direction, the leftmost and rightmost 14 columns of the
-// bottom 6 lines of the full graphics screen could contain a decoration that
-// visually extends / supports the visualization templates.
+// And in the opposite direction, the rightmost 14 columns of the bottom 6 
+// lines of the full graphics screen could contain a decoration that visually
+// extends / supports the visualization templates.
 //
 
 #define SAMPLE_MAX_VAL 0x23
 #define SAMPLE_LO_BASE 0x40
 #define SAMPLE_HI_BASE 0x64
-#define SAMPLE_LO_2_HI 0xAB
+#define SAMPLE_LO_2_HI 0xA9
 #define SAMPLE_HI_2_LO 0xFA
 
 #define SAMPLE_CHUNK_SIZE 0xFF
-#define VISUAL_CHUNK_INDX 0xAF
+#define VISUAL_CHUNK_INDX 0xAD
 #define OUTPUT_CHUNK_SIZE 0x100
 
 #define VISUAL_NUM_VAL 0x8C
@@ -197,16 +197,13 @@ void write_level_meter(int a2str)
       {
         color = PIXEL_ORANGE;
       }
-      set_pixel(line, PIXEL_MID_POS - pos,     color);
-      set_pixel(line, PIXEL_MID_POS + pos + 1, color);
+      set_pixel(line + 1, PIXEL_MID_POS - pos,     color);
+      set_pixel(line + 1, PIXEL_MID_POS + pos + 1, color);
     }
-    for (int i = 0; i < 2; i++)
+    if (write(a2str, line, sizeof(line)) != sizeof(line))
     {
-      if (write(a2str, line + 40 * i, 39) != 39)
-      {
-        perror("a2str");
-        return;
-      }
+      perror("a2str");
+      return;
     }
   }
 
@@ -222,23 +219,20 @@ void write_progress_bar(int a2str)
   #define MIN (PIXEL_MID_POS - VISUAL_NUM_VAL / 4)
   #define MAX (PIXEL_MID_POS + VISUAL_NUM_VAL / 4)
 
-  set_pixel(line, MIN - 1, PIXEL_WHITE);
-  set_pixel(line, MAX,     PIXEL_WHITE);
+  set_pixel(line + 1, MIN - 1, PIXEL_WHITE);
+  set_pixel(line + 1, MAX,     PIXEL_WHITE);
 
   for (int pos = MIN; pos < MAX; pos++)
   {
     if (pos > MIN)
     {
-      set_pixel(line, pos - 1, PIXEL_GREY);
+      set_pixel(line + 1, pos - 1, PIXEL_GREY);
     }
-    set_pixel(line, pos, PIXEL_WHITE);
-    for (int i = 0; i < 2; i++)
+    set_pixel(line + 1, pos, PIXEL_WHITE);
+    if (write(a2str, line, sizeof(line)) != sizeof(line))
     {
-      if (write(a2str, line + 40 * i, 39) != 39)
-      {
-        perror("a2str");
-        return;
-      }
+      perror("a2str");
+      return;
     }
   }
 
