@@ -198,7 +198,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define LOW   0xC086  // W5100 address low byte
 #define DATA  0xC087  // W5100 data
 
-#define SILENCE (PLAY_BUF + DTY_MAX / 2 * 0x0100)
+#define SILENCE (PLAY_BUF + DTY_MAX / 2 * 0x0100 + GEN_END)
 
 #define LO(addr)  ((uint8_t)((uint16_t)(addr)   ))
 #define HI(addr)  ((uint8_t)((uint16_t)(addr)>>8))
