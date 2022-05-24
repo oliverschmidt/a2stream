@@ -61,8 +61,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 // The .A2Stream output file consists of three parts:
 //
-// 1. A 16 kB Apple II DHGR graphics screen. This part is copied 1:1 from the
-//    .DHGR cover art input file.
+// 1. A 16 kB Apple II DHGR graphics screen. This part is copied from the .DHGR
+//    cover art input file. The bottom 6 lines of the screen are set to black.
 //
 // 2. Exactly 140 visualization templates. Each template consists of 40 bytes.
 //    - The first byte is 0 or 1. If it is 0, then the template is meant for
@@ -135,6 +135,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PIXEL_WHITE   0x0F
 
 extern uint8_t dhgr[0x4000];
+
+const int lines[12] = {0x0BD0, 0x0FD0, 0x13D0, 0x17D0, 0x1BD0, 0x1FD0,
+                       0x2BD0, 0x2FD0, 0x33D0, 0x37D0, 0x3BD0, 0x3FD0};
 
 // The DHGR display encodes 7 pixels across interleaved
 // 4-byte sequences of AUX and MAIN memory, as follows:
@@ -300,6 +303,11 @@ int main(int argc, const char *argv[])
     {
       perror("cover");
       return EXIT_FAILURE;
+    }
+
+    for (int i = 0; i < sizeof(lines) / sizeof(lines[0]); i++)
+    {
+      memset(dhgr + lines[i], PIXEL_BLACK, 40);
     }
   }
 
