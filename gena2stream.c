@@ -59,19 +59,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
 //
-// The .A2Stream output file consists of three parts:
+// The .A2Stream output file consists of four parts:
 //
-// 1. A 16 kB Apple II DHGR graphics screen. This part is copied from the .DHGR
+// 1. A 2-byte stream type header. The first byte is 0xA2, the second byte is
+//    currently 0x01.
+// 
+// 2. A 16 kB Apple II DHGR graphics screen. This part is copied from the .DHGR
 //    cover art input file. The bottom 6 lines of the screen are set to black.
 //
-// 2. Exactly 140 visualization templates. Each template consists of 40 bytes.
+// 3. Exactly 140 visualization templates. Each template consists of 40 bytes.
 //    - The first byte is 0 or 1. If it is 0, then the template is meant for
 //      MAIN memory. If it is 1, then the template is meant for AUX memory.
 //    - The following 39 bytes represent a line of a 40 byte DHGR graphics
 //      screen with the rightmost byte missing. That line is displayed in the
 //      bottom 6 lines of the screen.
 //
-// 3. A variable number of sample data chunks. Each chunk consists of 256 bytes
+// 4. A variable number of sample data chunks. Each chunk consists of 256 bytes
 //    with 255 audio samples and one visualization byte.
 //    - The visualization byte is placed at offset 173 in the data chunk and
 //      represents a value between 0 and 139 which selects the visualization
@@ -109,6 +112,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // extends / supports the visualization templates.
 //
 
+#define STREAM_TYPE_MAJOR 0xA2
+#define STREAM_TYPE_MINOR 0x01
+
 #define SAMPLE_MAX_VAL 0x23
 #define SAMPLE_LO_BASE 0x40
 #define SAMPLE_HI_BASE 0x64
@@ -135,6 +141,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PIXEL_WHITE   0x0F
 
 extern uint8_t dhgr[0x4000];
+
+const uint8_t type[2] = {STREAM_TYPE_MAJOR, STREAM_TYPE_MINOR};
 
 const int lines[12] = {0x0BD0, 0x0FD0, 0x13D0, 0x17D0, 0x1BD0, 0x1FD0,
                        0x2BD0, 0x2FD0, 0x33D0, 0x37D0, 0x3BD0, 0x3FD0};
@@ -288,6 +296,12 @@ int main(int argc, const char *argv[])
                          S_IREAD | S_IWRITE);
   fprintf(stderr, "a2str: %s\n\n", name);
   if (a2str == -1)
+  {
+    perror("a2str");
+    return EXIT_FAILURE;
+  }
+
+  if (write(a2str, type, sizeof(type)) != sizeof(type))
   {
     perror("a2str");
     return EXIT_FAILURE;

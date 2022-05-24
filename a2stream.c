@@ -355,11 +355,29 @@ void main(int argc, char *argv[])
     hires_on();
 
     printf("- Ok\n\nLoading cover art ");
-    if (!load_hires(true) || !load_hires(false))
     {
-      printf("- Failed\n\n");
-      w5100_disconnect();
-      continue;
+      uint8_t type[2];
+      char *error = NULL;
+
+      if (!load(type, sizeof(type), false))
+      {
+        error = "Failed";
+      }
+      else if (type[0] != 0xA2 || type[1] != 0x01)
+      {
+        error = "Unknown stream type";
+      }
+      else if (!load_hires(true) || !load_hires(false))
+      {
+        error = "Failed";
+      }
+
+      if (error)
+      {
+        printf("- %s\n\n", error);
+        w5100_disconnect();
+        continue;
+      }
     }
     printf("- Ok\n\n");
 
