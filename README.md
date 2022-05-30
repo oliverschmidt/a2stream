@@ -32,7 +32,7 @@ To stream an **.a2stream** file:
   * `http://a2retro.de/a2s/HowsItSupposedToFeel.a2stream`
   * `http://a2retro.de/a2s/TimeToSayGoodbye.a2stream` - shows progress bar
   * `http://a2retro.de/a2s/HealYou.a2stream` - shows default cover art
-* Find URLs of **.a2stream** files for all Open Apple podcast episodes on https://a2retro.de/oa/
+* Find URLs of **.a2stream** files for all Open Apple podcast episodes on https://www.open-apple.net/a2stream/
 * Use `Esc` to quit at any point
 * Use `1`-`9` to fast-forward 1-9 minutes
 * Use any other key to pause streaming
