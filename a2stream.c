@@ -234,7 +234,7 @@ void main(int argc, char *argv[])
     {
       read(file, &eth_init, 1);
       close(file);
-      eth_init &= ~'0';
+      eth_init &= 7;
     }
   }
 
