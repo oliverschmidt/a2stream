@@ -50,7 +50,7 @@ To get decent sound quality on the IIgs:
 
 To prepare an **.a2stream** file for streaming:
 * Create a header-less **.raw** file with 22050Hz mono 32-bit-float PCM data (e.g. with [Audacity](https://www.audacityteam.org/))
-* Generate an **.a2stream** file from the **.raw** file with **gena2stream.exe** ([source code](https://github.com/oliverschmidt/A2Stream/blob/main/gena2stream.c))
+* Generate an **.a2stream** file from the **.raw** file with **gena2stream** ([source code](https://github.com/oliverschmidt/A2Stream/blob/main/gena2stream.c))
   * Put a standard 16kB **.dhgr** file beside the **.raw** file for custom cover art (optional)
   * Use the option to `-p` switch the visualization from *level meter* to *progress bar*
 * Put the **.a2stream** file onto any HTTP (not HTTPS) server
@@ -58,3 +58,15 @@ To prepare an **.a2stream** file for streaming:
     * Run the [HTTP File Server](http://www.rejetto.com/hfs/) and drop the file you want to stream in its _Virtual File System_
   * Run a simple local HTTP server on Linux
     * `cd` to the directory containing the file you want to stream and enter `python -m SimpleHTTPServer` or `python3 -m http.server` depending on the Python version you want to use
+
+To play an internet live stream:
+* Install [MPlayer](https://mplayerhq.hu/)
+* Run **srva2stream** ([source code](https://github.com/oliverschmidt/A2Stream/blob/main/srva2stream.c))
+  * Provide on the command line the TCP port number you want to use
+  * Put a standard 16kB **srva2stream-&lt;port number&gt;.dhgr** file beside **srva2stream** for custom cover art (optional)
+* Wait for the message `waiting on pipe <pipe name>`
+* Run MPlayer
+  * Provide command line parameters
+  * `-nocache -af pan=1:0.5:0.5,volnorm=1:0.8,resample=22200:0:1,format=floatne -ao pcm:nowaveheader:file=<pipe name> <stream url>`
+* Wait for the message `connect on pipe`
+* Run **A2STREAM.SYSTEM** and enter as URL `<name or address of machine running srva2stream>:<port number>`
