@@ -70,3 +70,4 @@ To play an internet live stream:
   * `-nocache -af pan=1:0.5:0.5,volnorm=1:0.8,resample=22200:0:1,format=floatne -ao pcm:nowaveheader:file=<pipe name> <stream url>`
 * Wait for the message `connect on pipe`
 * Run **A2STREAM.SYSTEM** and enter as URL `<name or address of machine running srva2stream>:<port number>`
+* Use the [step-by-step guide](LIVE.md) to install **srva2stream** on a Raspberry Pi (optional)
