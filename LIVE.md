@@ -57,7 +57,7 @@ The A2Stream server allows to listen to internet live streams (such as internet 
   ```
   sudo systemctl enable a2stream.service
   ```
-* Create a service unit for MPlayer (depending on the the A2Stream server) with
+* Create a service unit for MPlayer (depending on the the A2Stream service) with
 * ```
   sudo bash -c 'cat > /etc/systemd/system/mplayer.service << EOF
   [Unit]
