@@ -6,7 +6,7 @@ The A2Stream server allows to listen to internet live streams (such as internet 
 * Open a shell on your Raspberry Pi.
 * Get the A2Stream server source code with 
   ```
-  wget https://raw.githubusercontent.com/oliverschmidt/A2Stream/main/srva2stream.c
+  wget https://raw.githubusercontent.com/oliverschmidt/a2stream/main/srva2stream.c
   ```
 * Compile the A2Stream server source code with
   ```
