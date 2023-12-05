@@ -50,7 +50,7 @@ To get decent sound quality on the IIgs:
 
 To prepare an **.a2stream** file for streaming:
 * Create a header-less **.raw** file with 22050Hz mono 32-bit-float PCM data (e.g. with [Audacity](https://www.audacityteam.org/))
-* Generate an **.a2stream** file from the **.raw** file with **gena2stream** ([source code](https://github.com/oliverschmidt/A2Stream/blob/main/gena2stream.c))
+* Generate an **.a2stream** file from the **.raw** file with **gena2stream** ([source code](https://github.com/oliverschmidt/a2stream/blob/main/gena2stream.c))
   * Put a standard 16kB **.dhgr** file beside the **.raw** file for custom cover art (optional)
   * Use the option to `-p` switch the visualization from *level meter* to *progress bar*
 * Put the **.a2stream** file onto any HTTP (not HTTPS) server
@@ -61,7 +61,7 @@ To prepare an **.a2stream** file for streaming:
 
 To play an internet live stream:
 * Install [MPlayer](https://mplayerhq.hu/)
-* Run **srva2stream** ([source code](https://github.com/oliverschmidt/A2Stream/blob/main/srva2stream.c))
+* Run **srva2stream** ([source code](https://github.com/oliverschmidt/a2stream/blob/main/srva2stream.c))
   * Provide on the command line the TCP port number you want to use
   * Put a standard 16kB **srva2stream-&lt;port number&gt;.dhgr** file beside **srva2stream** for custom cover art (optional)
 * Wait for the message `waiting on pipe <pipe name>`
