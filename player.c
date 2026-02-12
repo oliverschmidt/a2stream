@@ -162,7 +162,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define SET_NUM 2     // number of pulse generator page sets
 #define RW_SKEW 4     // byte skew between read and write
 
-// According to the ProDOS 8 Technical Reference Manual Fig. A�3
+// According to the ProDOS 8 Technical Reference Manual Fig. A3
 // 'Zero Page Memory Map', zero page locations $FA-$FF are free.
 
 #define SPKR_PTR 0xFA     // zp speaker pointer
